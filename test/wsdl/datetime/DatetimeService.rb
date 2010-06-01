@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
-require 'datetimeServant.rb'
-
+require File.join(File.dirname(File.expand_path(__FILE__)),'datetimeServant.rb')
 require 'soap/rpc/standaloneServer'
 require 'soap/mapping/registry'
 

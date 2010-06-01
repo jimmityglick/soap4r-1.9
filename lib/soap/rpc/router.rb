@@ -512,7 +512,15 @@ module SOAP
         def request_rpc_enc(request, mapping_registry, opt)
           param = Mapping.soap2obj(request, mapping_registry, nil, opt)
           request.collect { |key, value|
-            param[key]
+            begin 
+              param[key]
+            rescue Exception=>ex
+              STDERR.puts param.class
+              STDERR.puts param.methods
+              STDERR.puts ex
+              STDERR.puts key
+              raise ex
+            end
           }
         end
 

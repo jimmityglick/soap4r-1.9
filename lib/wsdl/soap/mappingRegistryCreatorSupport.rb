@@ -69,6 +69,7 @@ module MappingRegistryCreatorSupport
       var[:schema_attribute] = define_attribute(typedef.attributes)
     end
     assign_const(schema_ns, 'Ns')
+#    var[:class] = "::#{var[:class]}"
     dump_entry(@varname, var)
   end
 

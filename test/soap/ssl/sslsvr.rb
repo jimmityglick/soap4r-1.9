@@ -40,9 +40,9 @@ if $0 == __FILE__
     :Port => PORT,
     :AccessLog => [],
     :SSLEnable => true,
-    :SSLCACertificateFile => File.join(DIR, 'ca.cert'),
-    :SSLCertificate => cert('server.cert'),
-    :SSLPrivateKey => key('server.key'),
+    :SSLCACertificateFile => File.join(DIR, './myCA/certs/ca.crt'),
+    :SSLCertificate => cert('./myCA/certs/server.crt'),
+    :SSLPrivateKey => key('./myCA/private/server.key'),
     :SSLVerifyClient => nil, #OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT|OpenSSL::SSL::VERIFY_PEER,
     :SSLClientCA => cert('ca.cert'),
     :SSLCertName => nil

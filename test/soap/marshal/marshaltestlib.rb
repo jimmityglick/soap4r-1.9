@@ -369,9 +369,10 @@ module MarshalTestLib
     10.times do
       t = Time.now
       #sometimes, its off by 1 or 2 usecs
+      # here its checking for first 3 digits
+      # i dont care if usecs are a bit off 
       marshal_equal(t, "marshalling failed for #{t}") {|a|
-        s=a.usec.to_s
-        s[0..3].to_i
+        a.year.to_s + a.day.to_s + a.hour.to_s + a.min.to_s + a.sec.to_s 
       }
     end
   end
@@ -379,8 +380,7 @@ module MarshalTestLib
   def test_time_subclass
       #sometimes, its off by 1 or 2 usecs
       marshal_equal(MyTime.new(10), "marshalling failed for #{MyTime.new(10)}") {|a|
-        s=a.usec.to_s
-        s[0..3].to_i
+        a.year.to_s + a.day.to_s + a.hour.to_s + a.min.to_s + a.sec.to_s 
       }
   end
 

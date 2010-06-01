@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'soap/wsdlDriver'
-require 'DatetimeService.rb'
+require File.join(File.dirname(File.expand_path(__FILE__)),'DatetimeService.rb')
 
 
 module WSDL
@@ -50,9 +50,9 @@ class TestDatetime < Test::Unit::TestCase
   end
 
   def test_datetime
-    d = DateTime.now
-    d1 = d + 1
-    d2 = @client.now(d)
+    d = Time.now
+    d1 = (d + 1).utc
+    d2 = @client.now(d).utc
     assert_equal(d1.year, d2.year)
     assert_equal(d1.month, d2.month)
     assert_equal(d1.day, d2.day)
@@ -63,10 +63,9 @@ class TestDatetime < Test::Unit::TestCase
   end
 
   def test_time
-    d = DateTime.now
-    t = Time.gm(d.year, d.month, d.day, d.hour, d.min, d.sec)
-    d1 = d + 1
-    d2 = @client.now(t)
+    d = Time.now
+    d1 = (d + 1).utc
+    d2 = @client.now(d).utc
     assert_equal(d1.year, d2.year)
     assert_equal(d1.month, d2.month)
     assert_equal(d1.day, d2.day)

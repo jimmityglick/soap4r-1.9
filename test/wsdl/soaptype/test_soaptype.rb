@@ -79,13 +79,17 @@ class TestSOAPTYPE < Test::Unit::TestCase
     File.join(DIR, filename)
   end
 
-SOAPTYPE_WSDL_XML = %q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+XMNLS=%q[<?xml version="1.0" encoding="utf-8" ?>
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">]
+
+SOAPTYPE_WSDL_XML = 
+<<-EOD.chomp
+#{XMNLS}
   <env:Body>
-    <n1:echo_soaptype xmlns:n1="urn:soaptype"
-        env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <n1:echo_soaptype env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:n1="urn:soaptype">
       <arg xmlns:n2="urn:soaptype-type"
           xsi:type="n2:wrapper">
         <short xsi:type="xsd:short">123</short>
@@ -94,15 +98,15 @@ SOAPTYPE_WSDL_XML = %q[<?xml version="1.0" encoding="utf-8" ?>
       </arg>
     </n1:echo_soaptype>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
-SOAPTYPE_NATIVE_XML = %q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+SOAPTYPE_NATIVE_XML =
+<<-EOD.chomp
+#{XMNLS}
   <env:Body>
-    <n1:echo_soaptype xmlns:n1="urn:soaptype"
-        env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <n1:echo_soaptype env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:n1="urn:soaptype">
       <arg xsi:type="xsd:anyType">
         <short xsi:type="xsd:short">123</short>
         <long xsi:type="xsd:long">456</long>
@@ -110,7 +114,8 @@ SOAPTYPE_NATIVE_XML = %q[<?xml version="1.0" encoding="utf-8" ?>
       </arg>
     </n1:echo_soaptype>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   def test_wsdl
     wsdl = File.join(DIR, 'soaptype.wsdl')

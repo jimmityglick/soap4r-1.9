@@ -87,9 +87,9 @@ class TestQualified < Test::Unit::TestCase
 
   LOGIN_REQUEST_QUALIFIED =
 %q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
   <env:Body>
     <n1:GetPrimeNumbers xmlns:n1="http://www50.brinkster.com/vbfacileinpt/np">
       <Min>2</Min>

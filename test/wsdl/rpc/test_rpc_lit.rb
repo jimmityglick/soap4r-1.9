@@ -152,11 +152,13 @@ class TestRPCLIT < Test::Unit::TestCase
     result = @client.echoStringArray(ArrayOfstring["a", "b", "c"])[0]
     assert_equal(["a", "b", "c"], result.stringItem)
   end
+XMLNS=%q[<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">]
 
   ECHO_STRING_ARRAY_REQUEST =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoStringArray xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <inputStringArray xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -166,12 +168,13 @@ class TestRPCLIT < Test::Unit::TestCase
       </inputStringArray>
     </n1:echoStringArray>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   ECHO_STRING_ARRAY_RESPONSE =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoStringArrayResponse xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <n1:return xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -181,7 +184,8 @@ class TestRPCLIT < Test::Unit::TestCase
       </n1:return>
     </n1:echoStringArrayResponse>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   def test_stub_echoStringArray
     drv = SoapTestPortTypeRpcLit.new("http://localhost:#{Port}/")
@@ -197,9 +201,10 @@ class TestRPCLIT < Test::Unit::TestCase
   end
 
   ECHO_STRING_ARRAY_INLINE_REQUEST =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
   <env:Body>
     <n1:echoStringArrayInline xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <inputStringArray>
@@ -209,12 +214,13 @@ class TestRPCLIT < Test::Unit::TestCase
       </inputStringArray>
     </n1:echoStringArrayInline>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   ECHO_STRING_ARRAY_INLINE_RESPONSE =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoStringArrayInlineResponse xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <n1:return>
@@ -224,8 +230,8 @@ class TestRPCLIT < Test::Unit::TestCase
       </n1:return>
     </n1:echoStringArrayInlineResponse>
   </env:Body>
-</env:Envelope>]
-
+</env:Envelope>
+EOD
   def test_stub_echoStringArrayInline
     drv = SoapTestPortTypeRpcLit.new("http://localhost:#{Port}/")
     drv.wiredump_dev = str = ''
@@ -239,9 +245,9 @@ class TestRPCLIT < Test::Unit::TestCase
   end
 
   ECHO_NESTED_STRUCT_REQUEST =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoNestedStruct xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <inputStruct xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -256,12 +262,13 @@ class TestRPCLIT < Test::Unit::TestCase
       </inputStruct>
     </n1:echoNestedStruct>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   ECHO_NESTED_STRUCT_RESPONSE =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoNestedStructResponse xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <n1:return xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -276,7 +283,8 @@ class TestRPCLIT < Test::Unit::TestCase
       </n1:return>
     </n1:echoNestedStructResponse>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   def test_wsdl_echoNestedStruct
     wsdl = pathname('test-rpc-lit.wsdl')
@@ -298,9 +306,9 @@ class TestRPCLIT < Test::Unit::TestCase
   end
 
   ECHO_NESTED_STRUCT_REQUEST_NIL =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoNestedStruct xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <inputStruct xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -314,12 +322,13 @@ class TestRPCLIT < Test::Unit::TestCase
       </inputStruct>
     </n1:echoNestedStruct>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   ECHO_NESTED_STRUCT_RESPONSE_NIL =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoNestedStructResponse xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <n1:return xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -332,7 +341,8 @@ class TestRPCLIT < Test::Unit::TestCase
       </n1:return>
     </n1:echoNestedStructResponse>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
   def test_wsdl_echoNestedStruct_nil
     wsdl = pathname('test-rpc-lit.wsdl')
     @client = ::SOAP::WSDLDriverFactory.new(wsdl).create_rpc_driver
@@ -377,9 +387,9 @@ class TestRPCLIT < Test::Unit::TestCase
   end
 
   ECHO_STRUCT_ARRAY_REQUEST =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoStructArray xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <inputStructArray xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -396,12 +406,12 @@ class TestRPCLIT < Test::Unit::TestCase
       </inputStructArray>
     </n1:echoStructArray>
   </env:Body>
-</env:Envelope>]
-
+</env:Envelope>
+EOD
   ECHO_STRUCT_ARRAY_RESPONSE =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<<-EOD.chomp
+<?xml version="1.0" encoding="utf-8" ?>
+#{XMLNS}
   <env:Body>
     <n1:echoStructArrayResponse xmlns:n1="http://soapbuilders.org/rpc-lit-test">
       <n1:return xmlns:n2="http://soapbuilders.org/rpc-lit-test/types">
@@ -418,7 +428,8 @@ class TestRPCLIT < Test::Unit::TestCase
       </n1:return>
     </n1:echoStructArrayResponse>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+EOD
 
   def test_wsdl_echoStructArray
     wsdl = pathname('test-rpc-lit.wsdl')

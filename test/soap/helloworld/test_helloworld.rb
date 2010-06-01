@@ -1,7 +1,6 @@
 require 'test/unit'
 require 'soap/rpc/driver'
-require 'hw_s.rb'
-
+require File.join(File.dirname(File.expand_path(__FILE__)),'hw_s.rb')
 
 module SOAP
 module HelloWorld

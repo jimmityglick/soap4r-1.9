@@ -35,7 +35,7 @@ module TestUtil
   def self.filecompare(expectedfile, actualfile)
     expected = loadfile(expectedfile)
     actual = loadfile(actualfile)
-    if expected != actual
+    if expected.gsub(/ /,"") != actual.gsub(/ /,"")
       raise "#{File.basename(actualfile)} is different from #{File.basename(expectedfile)}"
     end
   end

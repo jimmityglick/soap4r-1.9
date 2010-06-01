@@ -569,7 +569,6 @@ module XSD
         t
       elsif t.is_a?(Date)
         t = screen_data_str(t)
-        t <<= 12 if t.year < 0
         t
       else
         screen_data_str(t)
@@ -590,11 +589,8 @@ module XSD
     end
 
     private
-    # DATE_FORMAT="%Y-%m-%d"
-    # TIME_FORMAT="%H:%M:%S %z"
-    # DATETIME_FORMAT="#{DATE_FORMAT} #{TIME_FORMAT}"
     def screen_data_str(t)
-      Time.parse(t)
+      Time.xmlschema(t)
     end
 
     def _set(data)
@@ -633,28 +629,17 @@ module XSD
     def initialize(value = nil)
       init(Type, value)
     end
-
     private
-
     def screen_data_str(t)
-      /^([+\-]?\d{4,})-(\d\d)-(\d\d)(Z|(?:([+\-])(\d\d):(\d\d))?)?$/ =~ t.to_s.strip
-      unless Regexp.last_match
-        raise ValueSpaceError.new("#{ type }: cannot accept '#{ t }'.")
-      end
-      year = $1.to_i
-      if year < 0
-        year += 1
-      end
-      mon = $2.to_i
-      mday = $3.to_i
-      zonestr = $4
-      DateTime.civil(year, mon, mday, 0, 0, 0, tz2of(zonestr))
+      Date.parse(t)
+    end
+
+    def _set(data)
+      @data = data
     end
 
     def _to_s
-      year = (@data.year > 0) ? @data.year : @data.year - 1
-      s = format('%.4d-%02d-%02d', year, @data.mon, @data.mday)
-      add_tz(s)
+      @data.to_date.to_s
     end
   end
 

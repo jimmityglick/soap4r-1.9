@@ -236,9 +236,12 @@ module GenSupport
 private
 
   def trim_eol(str)
+    ret = ""
     str.each_line { |line|
-      line.sub(/\r?\n\z/, "") + "\n"
+      ret << line.gsub(/\r?\n\z/, "")  
+      ret << "\n"
     }
+    ret
   end
 
   def trim_indent(str)

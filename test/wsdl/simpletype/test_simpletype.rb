@@ -70,7 +70,7 @@ class TestSimpleType < Test::Unit::TestCase
 
   def test_ping
     ret = @client.ping({:myversion => "1.9", :date => "2004-01-01T00:00:00Z"})
-    assert_equal("1.9 (2004-01-01T00:00:00Z)", ret)
+    assert_equal("1.9 (2004-01-01T00:00:00.000000Z)", ret)
   end
 
   def test_ping_id
