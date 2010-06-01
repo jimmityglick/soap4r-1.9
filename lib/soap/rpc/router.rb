@@ -267,7 +267,6 @@ module SOAP
         @operation_by_qname.each {|k,v| 
           if k.name.to_s == qname.name.to_s then 
             op = v
-            STDERR.puts op
             return op;
           end
         }
