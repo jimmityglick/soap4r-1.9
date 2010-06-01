@@ -1,0 +1,18 @@
+
+This is an attempt to get a reduced soap4r to work on ruby 1.9 for my specific purposes.
+The main support excluded so far is the date formatting
+The date format has been hardcoded so that this :
+
+Time.parse(DateTime.now.to_s).to_datetime.to_s 
+
+will always produces the expected result. 
+
+
+
+Otherwise, the goal is to have it pass all the unit tests. 
+
+
+This is a work in progress, and not tested at all in anything close to a production environment. 
+
+Also - as a caveat - I am a SOAP noob,the hope is that is the unit tests pass on 1.9, then there is a reasonable chance this library can be used in the same way soap4r is used for 1.8 projects.
+
