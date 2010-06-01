@@ -6,6 +6,18 @@ if defined?(HTTPClient)
 
 module SOAP
 
+S4R_HEADERS=<<-__EOF__ 
+<?xml version="1.0" encoding="utf-8" ?>
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+__EOF__
+S4R_HEADERS_INDENT=<<-__EOF__ 
+<?xml version="1.0" encoding="utf-8" ?>
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+__EOF__
 
 class TestNoIndent < Test::Unit::TestCase
   Port = 17171
@@ -41,40 +53,34 @@ class TestNoIndent < Test::Unit::TestCase
     @client.reset_stream if @client
   end
 
-  INDENT_XML =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <env:Body>
+  INDENT_XML =<<-__EOF__
+#{S4R_HEADERS_INDENT}  <env:Body>
     <nop env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
     </nop>
   </env:Body>
-</env:Envelope>]
+</env:Envelope>
+__EOF__
 
-  NO_INDENT_XML =
-%q[<?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<env:Body>
+  NO_INDENT_XML =<<-__EOF__
+#{S4R_HEADERS}<env:Body>
 <nop env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
 </nop>
 </env:Body>
-</env:Envelope>]
+</env:Envelope>
+__EOF__
 
   def test_indent
     @client.wiredump_dev = str = ''
     @client.options["soap.envelope.no_indent"] = false
     @client.nop
-    assert_equal(INDENT_XML, parse_requestxml(str))
+    assert_equal(INDENT_XML, parse_requestxml(str) << "\n")
   end
 
   def test_no_indent
     @client.wiredump_dev = str = ''
     @client.options["soap.envelope.no_indent"] = true
     @client.nop
-    assert_equal(NO_INDENT_XML, parse_requestxml(str))
+    assert_equal(NO_INDENT_XML, parse_requestxml(str) << "\n")
   end
 
   def parse_requestxml(str)

@@ -1,4 +1,4 @@
-# soap/property.rb: SOAP4R - Property implementation.
+ # soap/property.rb: SOAP4R - Property implementation.
 # Copyright (C) 2000-2007  NAKAMURA, Hiroshi <nahi@ruby-lang.org>.
 
 # This program is copyrighted free software by NAKAMURA, Hiroshi.  You can
@@ -74,7 +74,8 @@ class Property
 
   def load(stream)
     key_prefix = ""
-    stream.each_with_index do |line, lineno|
+    lineno=1
+    stream.each_line { |line|
       line.sub!(/\r?\n\z/u, '')
       case line
       when COMMENT_REGEXP
@@ -90,7 +91,8 @@ class Property
 	raise TypeError.new(
 	  "property format error at line #{lineno + 1}: `#{line}'")
       end
-    end
+      lineno+=1
+    }
     self
   end
 

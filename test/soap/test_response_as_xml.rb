@@ -62,12 +62,12 @@ class TestResponseAsXml < Test::Unit::TestCase
 
   RESPONSE_AS_XML=<<__XML__.chomp
 <?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
   <env:Body>
-    <n1:helloResponse xmlns:n1="urn:example.com:hello"
-        env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <n1:helloResponse env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:n1="urn:example.com:hello">
       <return xsi:type="xsd:string">hello world</return>
     </n1:helloResponse>
   </env:Body>

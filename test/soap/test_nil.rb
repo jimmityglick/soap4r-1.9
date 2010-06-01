@@ -44,9 +44,10 @@ class TestNil < Test::Unit::TestCase
   require 'rexml/document'
   # emulates SOAP::Lite's nil request
   def test_soaplite_nil
-    body = SOAP::SOAPBody.new(REXML::Document.new(<<-__XML__))
-      <nop xsi:nil="true"/>
+    xml=<<-__XML__
+      <nop  xmlns:xsi="http://www.w3.org/2001/XMLSchema" xsi:nil="true"/>
     __XML__
+    body = SOAP::SOAPBody.new(REXML::Document.new(xml))
     @client.wiredump_dev = STDOUT if $DEBUG
     header, body = @client.invoke(nil, body)
     assert_equal(1, body.root_node["return"].data)

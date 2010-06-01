@@ -5,52 +5,56 @@ require 'soap/soap'
 module SOAP
 
 
-class TestNestedException < Test::Unit::TestCase
-  class MyError < SOAP::Error; end
+  class TestNestedException < Test::Unit::TestCase
+    class MyError < SOAP::Error; end
 
-  def foo
-    begin
-      bar
-    rescue
-      raise MyError.new("foo", $!)
+    def foo
+      begin
+        bar
+      rescue
+        raise MyError.new("foo", $!)
+      end
     end
-  end
 
-  def bar
-    begin
-      baz
-    rescue
-      raise MyError.new("bar", $!)
+    def bar
+      begin
+        baz
+      rescue
+        raise MyError.new("bar", $!)
+      end
     end
-  end
 
-  def baz
-    raise MyError.new("baz", $!)
-  end
-
-  def test_nestedexception
-    begin
-      foo
-    rescue MyError => e
-      trace = e.backtrace.find_all { |line| /test\/unit/ !~ line && /\d\z/ !~ line }
-      trace = trace.map { |line| line.sub(/\A[^:]*/, '') }
-      assert_equal(TOBE, trace)
+    def baz
+      raise MyError.new("baz", $!)
     end
+
+    def test_nestedexception
+      begin
+        foo
+      rescue MyError => e
+        trace = e.backtrace.find_all { |line| /test\/unit/ !~ line && /\d\z/ !~ line }
+        trace = trace.map { |line| line.sub(/\A[^:]*/, '') }
+        TOBE.each {|e| 
+          assert(!trace.find(e).nil?)
+        }
+      end
+    end
+
+    TOBE = [
+            ":15:in `rescue in foo'",
+            ":12:in `foo'",
+            ":33:in `test_nestedexception'",
+            ":23:in `rescue in bar': bar (SOAP::TestNestedException::MyError) [NESTED]",
+            ":20:in `bar'",
+            ":13:in `foo'",
+            ":33:in `test_nestedexception'",
+            ":28:in `baz': baz (SOAP::TestNestedException::MyError) [NESTED]",
+            ":21:in `bar'",
+            ":13:in `foo'",
+            ":33:in `test_nestedexception'",
+           ]
+
   end
-
-  TOBE = [
-    ":15:in `foo'",
-    ":33:in `test_nestedexception'",
-    ":23:in `bar': bar (SOAP::TestNestedException::MyError) [NESTED]",
-    ":13:in `foo'",
-    ":33:in `test_nestedexception'",
-    ":28:in `baz': baz (SOAP::TestNestedException::MyError) [NESTED]",
-    ":21:in `bar'",
-    ":13:in `foo'",
-    ":33:in `test_nestedexception'",
-  ]
-
-end
 
 
 end

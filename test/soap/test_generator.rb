@@ -14,11 +14,10 @@ class TestGenerator < Test::Unit::TestCase
     assert_equal("&lt;", g.encode_string(str)[-4, 4])
     #
     begin
-      kc_backup = $KCODE.dup
-      $KCODE = 'EUC-JP'
+#      $KCODE = 'EUC-JP'
       assert_equal("&lt;", g.encode_string(str)[-4, 4])
     ensure
-      $KCODE = kc_backup
+ #     $KCODE = "UTF-8"
     end
   end
 end

@@ -33,17 +33,35 @@ class TestMapping < Test::Unit::TestCase
   def test_mapping
     dump = <<__XML__.chomp
 <?xml version="1.0" encoding="utf-8" ?>
-<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
   <env:Body>
-    <SOAP..Case..TTMHeader xmlns:n1="urn:TruckMateTypes"
-        xsi:type="n1:TTMHeader"
-        env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <SOAP..Case..TTMHeader env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:n1="urn:TruckMateTypes"
+        xsi:type="n1:TTMHeader">
       <DSN xsi:type="xsd:string">dsn</DSN>
       <Password xsi:type="xsd:string">password</Password>
       <Schema xsi:type="xsd:string">schema</Schema>
       <Username xsi:type="xsd:string">username</Username>
+    </SOAP..Case..TTMHeader>
+  </env:Body>
+</env:Envelope>
+__XML__
+
+<<__XML__
+<?xml version="1.0" encoding="utf-8" ?>
+<env:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Body>
+    <SOAP..Case..TTMHeader env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        xmlns:n1="http://www.ruby-lang.org/xmlns/ruby/type/custom"
+        xsi:type="n1:SOAP..Case..TTMHeader">
+      <dSN xsi:type="xsd:string">dsn</dSN>
+      <password xsi:type="xsd:string">password</password>
+      <schema xsi:type="xsd:string">schema</schema>
+      <username xsi:type="xsd:string">username</username>
     </SOAP..Case..TTMHeader>
   </env:Body>
 </env:Envelope>

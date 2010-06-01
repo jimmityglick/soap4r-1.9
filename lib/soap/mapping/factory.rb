@@ -179,8 +179,7 @@ module SOAP
       end
 
       def obj2soap(soap_class, obj, info, map)
-        if !@allow_original_mapping and
-            Time === obj and !obj.instance_variables.empty?
+        if !@allow_original_mapping and Time === obj and !obj.instance_variables.empty?
           return nil
         end
         soap_obj = nil
