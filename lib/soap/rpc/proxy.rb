@@ -386,7 +386,7 @@ private
           if namedef.nil?
             raise MethodDefinitionError.new("qname must be given")
           end
-          case inout
+          case inout.to_s
           when SOAPMethod::IN
             @doc_request_qnames << XSD::QName.new(nsdef, namedef)
             @doc_request_qualified << qualified

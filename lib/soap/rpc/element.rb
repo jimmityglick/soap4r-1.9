@@ -152,7 +152,7 @@ class SOAPMethod < SOAPStruct
   def SOAPMethod.param_count(param_def, *type)
     count = 0
     param_def.each do |io_type, name, param_type|
-      if type.include?(io_type)
+      if type.include?(io_type.to_s)
         count += 1
       end
     end
@@ -226,7 +226,7 @@ private
         #type_qname = TypeMap.index(mapped_class)
         type_qname = TypeMap.key(mapped_class)
       end
-      case io_type
+      case io_type.to_s
       when IN
         @signature.push([IN, name, type_qname])
         @inparam_names.push(name)
@@ -238,12 +238,12 @@ private
         @inoutparam_names.push(name)
       when RETVAL
         if @retval_name
-          raise MethodDefinitionError.new('duplicated retval')
+          raise SOAP::RPC::MethodDefinitionError.new('duplicated retval')
         end
         @retval_name = name
         @retval_class_name = mapped_class
       else
-        raise MethodDefinitionError.new("unknown type: #{io_type}")
+        raise SOAP::RPC::MethodDefinitionError.new("unknown type: io_type:#{io_type} io_type.class:#{io_type.class} ")
       end
     end
   end

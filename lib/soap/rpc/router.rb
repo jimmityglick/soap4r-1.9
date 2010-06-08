@@ -170,6 +170,7 @@ module SOAP
         soap_response = default_encodingstyle = nil
         begin
           receive_headers(headerhandler, env.header)
+          STDERR.puts @literal_mapping_registry
           soap_response =
             op.call(env.body, @mapping_registry, @literal_mapping_registry,
                     create_mapping_opt)
@@ -513,12 +514,14 @@ module SOAP
           param = Mapping.soap2obj(request, mapping_registry, nil, opt)
           request.collect { |key, value|
             begin 
+              STDERR.puts "===="
+              STDERR.puts key
+              STDERR.puts key.class
+              STDERR.puts param
+              STDERR.puts param.class
+              STDERR.puts "===="
               param[key]
             rescue Exception=>ex
-              STDERR.puts param.class
-              STDERR.puts param.methods
-              STDERR.puts ex
-              STDERR.puts key
               raise ex
             end
           }

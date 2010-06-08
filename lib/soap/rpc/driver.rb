@@ -215,8 +215,7 @@ private
   end
 
   def add_rpc_method_interface(name, param_def)
-    param_count = RPC::SOAPMethod.param_count(param_def,
-      RPC::SOAPMethod::IN, RPC::SOAPMethod::INOUT)
+    param_count = RPC::SOAPMethod.param_count(param_def, RPC::SOAPMethod::IN, RPC::SOAPMethod::INOUT)
     add_method_interface(name, param_count)
   end
 
